@@ -11,6 +11,19 @@ public class SongObject : ScriptableObject
     public float BPM => bpm;
     [SerializeField] float beatsShownInAdvance;
     public float BeatsShownInAdvance => beatsShownInAdvance;
-    [SerializeField] float[] notes;
-    public float[] Notes => notes;
+    [SerializeField] SongObject.Note[] notes;
+    public SongObject.Note[] Notes => notes;
+
+    [System.Serializable]
+    public class Note
+    {
+        [SerializeField] float beat;
+
+        [Range(1, 4)]
+        [SerializeField] int lane;
+
+        public float Beat => beat;
+
+        public int Lane => lane;
+    }
 }

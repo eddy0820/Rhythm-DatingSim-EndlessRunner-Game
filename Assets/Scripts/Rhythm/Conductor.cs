@@ -1,26 +1,61 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
 public class Conductor : MonoBehaviour
 {
-    [SerializeField] SongObject song;
-    // This is determined by the song you're trying to sync up to
+    public static Conductor Instance {get; private set; }
+
+    [Header("Song")]
+    public SongObject song;
+    
+    [Header("Lane 1 Positions")]
+    public Transform spawn1;
+    public Transform destroy1;
+    public Transform trigger1;
+
+    [Header("Lane 2 Positions")]
+    public Transform spawn2;
+    public Transform destroy2;
+    public Transform trigger2;
+
+    [Header("Lane 3 Positions")]
+    public Transform spawn3;
+    public Transform destroy3;
+    public Transform trigger3;
+
+    [Header("Lane 4 Positions")]
+    public Transform spawn4;
+    public Transform destroy4;
+    public Transform trigger4;
+    
+    [Header("Note Prefab")]
+    [SerializeField] GameObject notePrefab;
+
+    [Header("Read Only")]
     [ReadOnly, SerializeField] float songBpm;
-    // The number of seconds for each song beat.
+
     [ReadOnly, SerializeField] float secPerBeat;
-    // Current song position, in seconds.
+
     [ReadOnly, SerializeField] float songPosition;
-    // Current song position, in beats.
-    [ReadOnly, SerializeField] float songPositionInBeats;
-    // How many seconds have passed since the song started.
-    int nextIndex = 0;
+
+    [ReadOnly] public float songPositionInBeats;
+
+
+    Transform spawnPosition;
+    Transform destroyPosition;
+    Transform triggerPosition;
+
+    [System.NonSerialized] public bool hitNote;
+    [System.NonSerialized] public int nextIndex = 0;
     float dspSongTime;
     AudioSource musicSource;
 
     private void Awake()
     {
+        Instance = this;
+
         musicSource = GetComponent<AudioSource>();
         musicSource.clip = song.Song;
 
@@ -40,11 +75,37 @@ public class Conductor : MonoBehaviour
             // Determine how many beats since the song started.
             songPositionInBeats = songPosition / secPerBeat;
 
-            if (nextIndex < song.Notes.Length && song.Notes[nextIndex] < songPositionInBeats + song.BeatsShownInAdvance)
+            if (nextIndex < song.Notes.Length && song.Notes[nextIndex].Beat < songPositionInBeats + song.BeatsShownInAdvance)
             {
-                //Instantiate( /* Music Note Prefab */ );
-                Debug.Log("spawned beat");
-                //initialize the fields of the music note
+                switch(song.Notes[nextIndex].Lane) 
+                {
+                    case 1:
+                        spawnPosition = spawn1;
+                        destroyPosition = destroy1;
+                        triggerPosition = trigger1;
+                        break;
+                    case 2:
+                        spawnPosition = spawn2;
+                        destroyPosition = destroy2;
+                        triggerPosition = trigger2;
+                        break;
+                    case 3:
+                        spawnPosition = spawn3;
+                        destroyPosition = destroy3;
+                        triggerPosition = trigger3;
+                        break;
+                    case 4:
+                        spawnPosition = spawn4;
+                        destroyPosition = destroy4;
+                        triggerPosition = trigger4;
+                        break;
+                }
+
+                Debug.Log("Spawned Beat At Song Beat " + songPositionInBeats);
+
+                GameObject note = Instantiate(notePrefab, spawnPosition.position, notePrefab.transform.rotation);
+                
+                note.GetComponent<Note>().InitNote(spawnPosition, destroyPosition, triggerPosition, song.Notes[nextIndex].Beat);
 
                 nextIndex++;
             }

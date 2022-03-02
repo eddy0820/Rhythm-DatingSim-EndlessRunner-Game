@@ -18,7 +18,7 @@ public class InputManager : MonoBehaviour
             conductor.StartMusic();
 
         playerControls.HitNote.performed += _ =>
-            Test();
+            conductor.hitNote = true;
         
     }
 

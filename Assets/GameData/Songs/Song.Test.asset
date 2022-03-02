@@ -14,11 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   song: {fileID: 8300000, guid: e67b8945e5090324cbc4f8bd1d42e957, type: 3}
   bpm: 120
-  beatsShownInAdvance: 3
+  beatsShownInAdvance: 4
   notes:
-  - 4
-  - 5
-  - 5.5
-  - 6
-  - 6.5
-  - 7.5
+  - beat: 5
+    lane: 1
+  - beat: 6
+    lane: 2
+  - beat: 7
+    lane: 3
+  - beat: 8
+    lane: 4
