@@ -13,6 +13,14 @@ MonoBehaviour:
   m_Name: Idle
   m_EditorClassIdentifier: 
   song: {fileID: 8300000, guid: 40edc772a4a2bf2458c75d67a7e76b33, type: 3}
-  bpm: 0
-  beatsShownInAdvance: 0
-  notes: []
+  bpm: 120
+  beatsShownInAdvance: 4
+  notes:
+  - beat: 5
+    lane: 1
+  - beat: 6
+    lane: 2
+  - beat: 7
+    lane: 3
+  - beat: 8
+    lane: 4
