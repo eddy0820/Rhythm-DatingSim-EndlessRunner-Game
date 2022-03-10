@@ -14,13 +14,109 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   song: {fileID: 8300000, guid: 40edc772a4a2bf2458c75d67a7e76b33, type: 3}
   bpm: 120
-  beatsShownInAdvance: 4
+  beatsShownInAdvance: 6
   notes:
-  - beat: 5
-    lane: 1
-  - beat: 6
-    lane: 2
   - beat: 7
+    lane: 1
+  - beat: 9
+    lane: 2
+  - beat: 11
     lane: 3
-  - beat: 8
+  - beat: 13
     lane: 4
+  - beat: 15
+    lane: 3
+  - beat: 17
+    lane: 4
+  - beat: 18
+    lane: 4
+  - beat: 20
+    lane: 2
+  - beat: 21
+    lane: 2
+  - beat: 23
+    lane: 1
+  - beat: 24
+    lane: 2
+  - beat: 25
+    lane: 3
+  - beat: 26
+    lane: 4
+  - beat: 29
+    lane: 1
+  - beat: 31
+    lane: 2
+  - beat: 32
+    lane: 2
+  - beat: 34
+    lane: 4
+  - beat: 36
+    lane: 3
+  - beat: 38
+    lane: 1
+  - beat: 39
+    lane: 2
+  - beat: 40
+    lane: 3
+  - beat: 41
+    lane: 4
+  - beat: 42
+    lane: 3
+  - beat: 43
+    lane: 2
+  - beat: 44
+    lane: 1
+  - beat: 45
+    lane: 1
+  - beat: 47
+    lane: 2
+  - beat: 49
+    lane: 1
+  - beat: 52
+    lane: 3
+  - beat: 54
+    lane: 4
+  - beat: 56
+    lane: 3
+  - beat: 57
+    lane: 2
+  - beat: 58
+    lane: 2
+  - beat: 59
+    lane: 2
+  - beat: 61
+    lane: 1
+  - beat: 62
+    lane: 1
+  - beat: 63
+    lane: 1
+  - beat: 65
+    lane: 2
+  - beat: 67
+    lane: 3
+  - beat: 69
+    lane: 4
+  - beat: 72
+    lane: 1
+  - beat: 73
+    lane: 2
+  - beat: 74
+    lane: 3
+  - beat: 75
+    lane: 4
+  - beat: 78
+    lane: 1
+  - beat: 80
+    lane: 2
+  - beat: 82
+    lane: 3
+  - beat: 84
+    lane: 4
+  - beat: 85
+    lane: 4
+  - beat: 87
+    lane: 3
+  - beat: 88
+    lane: 3
+  - beat: 90
+    lane: 1
