@@ -20,6 +20,22 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "GoUp",
+                    "type": "Button",
+                    "id": "b9cc2864-fcc7-44d7-8be9-723902dc22d6",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "GoDown",
+                    "type": "Button",
+                    "id": "ac0e381a-da5b-4b0c-aa6e-b99654995905",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -42,6 +58,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Start Music",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9529ed61-42cc-4bbe-9ba4-427b20c459dc",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "GoUp",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d0f93b12-8bf1-44ef-aaf8-ee6d6ca5f8d9",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "GoDown",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

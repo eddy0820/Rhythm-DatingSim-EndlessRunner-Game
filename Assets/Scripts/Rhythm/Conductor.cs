@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
@@ -11,27 +12,51 @@ public class Conductor : MonoBehaviour
     public SongObject song;
     
     [Header("Lane 1 Positions")]
-    public Transform spawn1;
-    public Transform destroy1;
-    public Transform trigger1;
+    [SerializeField] Transform spawn1;
+    [SerializeField] Transform destroy1;
+    [SerializeField] Transform trigger1;
 
     [Header("Lane 2 Positions")]
-    public Transform spawn2;
-    public Transform destroy2;
-    public Transform trigger2;
+    [SerializeField] Transform spawn2;
+    [SerializeField] Transform destroy2;
+    [SerializeField] Transform trigger2;
 
     [Header("Lane 3 Positions")]
-    public Transform spawn3;
-    public Transform destroy3;
-    public Transform trigger3;
+    [SerializeField] Transform spawn3;
+    [SerializeField] Transform destroy3;
+    [SerializeField] Transform trigger3;
 
     [Header("Lane 4 Positions")]
-    public Transform spawn4;
-    public Transform destroy4;
-    public Transform trigger4;
+    [SerializeField] Transform spawn4;
+    [SerializeField] Transform destroy4;
+    [SerializeField] Transform trigger4;
+
+    [Header("NPC Locs")]
+    public Transform NPCLoc1;
+    public Transform NPCLoc2;
+    public Transform NPCLoc3;
+    public Transform NPCLoc4;
+
+    [Header("Player Dest Locs")]
+    public Transform playerDestLoc1;
+    public Transform playerDestLoc2;
+    public Transform playerDestLoc3;
+    public Transform playerDestLoc4;
+
+    [Header("NPC Dest Locs")]
+    public Transform NPCDestLoc1;
+    public Transform NPCDestLoc2;
+    public Transform NPCDestLoc3;
+    public Transform NPCDestLoc4;
     
     [Header("Note Prefab")]
     [SerializeField] GameObject notePrefab;
+
+    [Header("NPC")]
+    [SerializeField] GameObject NPCGameObject;
+
+    [Header("Databases")]
+    [SerializeField] NPCDatabaseObject NPCDatabase;
 
     [Header("Read Only")]
     [ReadOnly, SerializeField] float songBpm;
@@ -46,11 +71,18 @@ public class Conductor : MonoBehaviour
     Transform spawnPosition;
     Transform destroyPosition;
     Transform triggerPosition;
+    Transform playerDestLoc;
+    Transform NPCDestLoc;
 
     [System.NonSerialized] public bool hitNote;
     [System.NonSerialized] public int nextIndex = 0;
     float dspSongTime;
     AudioSource musicSource;
+    FameCurrency fameCurrency;
+    bool NPCChecked;
+    PlayerController playerController;
+    bool playerDone;
+    bool NPCDone;
 
     private void Awake()
     {
@@ -63,12 +95,98 @@ public class Conductor : MonoBehaviour
         secPerBeat = 60f / songBpm;
 
         nextIndex = 0;
+
+        fameCurrency = Camera.main.GetComponent<FameCurrency>();
+        NPCDatabase.InitNPCs();
+
+        playerController = FindObjectOfType<PlayerController>();
+
+        /////////////////////////////
+        NPCChecked = true;
     }
 
     private void Update()
     {
-        if(musicSource.isPlaying)
+        if(!musicSource.isPlaying)
         {
+            nextIndex = 0;
+
+            if(!NPCChecked) // needs to be set to false somewhere
+            {
+                // Chooses NPC
+                int randNum = UnityEngine.Random.Range(0, NPCDatabase.GetNPC.Count);
+
+                if(NPCDatabase.GetNPC[randNum].currFameCost <= fameCurrency.count)
+                {
+                    // Scales their fame cost
+                    if(NPCDatabase.GetNPC[randNum].currTimesShown > 0)
+                    {
+                        float temp = NPCDatabase.GetNPC[randNum].currFameCost + (NPCDatabase.GetNPC[randNum].currFameCost * NPCDatabase.GetNPC[randNum].FameScaleFactor);
+                        NPCDatabase.GetNPC[randNum].currFameCost = (int) temp;
+                    }
+
+                    // Sets the NPCs lane to the players
+                    switch(playerController.currentLane) 
+                    {
+                        case 1:
+                            NPCGameObject.transform.position = NPCLoc1.position;
+                            playerDestLoc = playerDestLoc1;
+                            NPCDestLoc = NPCDestLoc1;
+                            break;
+                        case 2:
+                            NPCGameObject.transform.position = NPCLoc2.position;
+                            playerDestLoc = playerDestLoc2;
+                            NPCDestLoc = NPCDestLoc2;
+                            break;
+                        case 3:
+                            NPCGameObject.transform.position = NPCLoc3.position;
+                            playerDestLoc = playerDestLoc3;
+                            NPCDestLoc = NPCDestLoc3;
+                            break;
+                        case 4:
+                            NPCGameObject.transform.position = NPCLoc4.position;
+                            playerDestLoc = playerDestLoc4;
+                            NPCDestLoc = NPCDestLoc4;
+                            break;
+                    }
+
+                    // Moves the characters towards each other
+                    StartCoroutine(LerpPlayer());
+                    StartCoroutine(LerpNPC());
+
+                    NPCDatabase.GetNPC[randNum].currTimesShown++;
+                }
+                else
+                {
+                    StartMusic();
+                }
+                
+                NPCChecked = true;
+            } 
+        }
+
+        if(playerDone && NPCDone)
+        {
+            // Dialogue start here
+        }
+    }
+
+    public void StartMusic()
+    {
+        // Record the time when the music starts.
+        dspSongTime = (float) AudioSettings.dspTime;
+
+        musicSource.Play();
+
+        StartCoroutine(PlaySong());
+    }
+
+    IEnumerator PlaySong()
+    {
+        while(musicSource.isPlaying)
+        {
+            /////////////////////////////
+            NPCChecked = false;
             // Determine how many seconds since the song started.
             songPosition = (float) (AudioSettings.dspTime - dspSongTime);
 
@@ -109,14 +227,41 @@ public class Conductor : MonoBehaviour
 
                 nextIndex++;
             }
+
+            yield return null;
         }
+
+        yield break;
     }
 
-    public void StartMusic()
+    IEnumerator LerpPlayer()
     {
-        // Record the time when the music starts.
-        dspSongTime = (float) AudioSettings.dspTime;
+        float t = 0;
+        Vector3 start = playerController.gameObject.transform.position;
+        while(t < 1)
+        {
+            playerController.gameObject.transform.position = Vector3.Lerp(start, playerDestLoc.position, t); 
+            t += 0.001f;
+            yield return null;
+        }
 
-        musicSource.Play();
+        playerDone = true;
+
+        yield break;
+    }
+
+    IEnumerator LerpNPC()
+    {
+        float t = 0;
+        Vector3 start = NPCGameObject.transform.position;
+        while(t < 1)
+        {
+            NPCGameObject.transform.position = Vector3.Lerp(start, NPCDestLoc.position, t); 
+            t += 0.001f;
+            yield return null;
+        }
+
+        NPCDone = true;
+        yield break;
     }
 }

@@ -33,6 +33,22 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""GoUp"",
+                    ""type"": ""Button"",
+                    ""id"": ""b9cc2864-fcc7-44d7-8be9-723902dc22d6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""GoDown"",
+                    ""type"": ""Button"",
+                    ""id"": ""ac0e381a-da5b-4b0c-aa6e-b99654995905"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -55,6 +71,28 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Start Music"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9529ed61-42cc-4bbe-9ba4-427b20c459dc"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GoUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d0f93b12-8bf1-44ef-aaf8-ee6d6ca5f8d9"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GoDown"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -84,6 +122,8 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_HitNote = m_Player.FindAction("Hit Note", throwIfNotFound: true);
         m_Player_StartMusic = m_Player.FindAction("Start Music", throwIfNotFound: true);
+        m_Player_GoUp = m_Player.FindAction("GoUp", throwIfNotFound: true);
+        m_Player_GoDown = m_Player.FindAction("GoDown", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -135,12 +175,16 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private IPlayerActions m_PlayerActionsCallbackInterface;
     private readonly InputAction m_Player_HitNote;
     private readonly InputAction m_Player_StartMusic;
+    private readonly InputAction m_Player_GoUp;
+    private readonly InputAction m_Player_GoDown;
     public struct PlayerActions
     {
         private @PlayerControls m_Wrapper;
         public PlayerActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @HitNote => m_Wrapper.m_Player_HitNote;
         public InputAction @StartMusic => m_Wrapper.m_Player_StartMusic;
+        public InputAction @GoUp => m_Wrapper.m_Player_GoUp;
+        public InputAction @GoDown => m_Wrapper.m_Player_GoDown;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -156,6 +200,12 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @StartMusic.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnStartMusic;
                 @StartMusic.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnStartMusic;
                 @StartMusic.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnStartMusic;
+                @GoUp.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGoUp;
+                @GoUp.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGoUp;
+                @GoUp.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGoUp;
+                @GoDown.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGoDown;
+                @GoDown.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGoDown;
+                @GoDown.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGoDown;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -166,6 +216,12 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @StartMusic.started += instance.OnStartMusic;
                 @StartMusic.performed += instance.OnStartMusic;
                 @StartMusic.canceled += instance.OnStartMusic;
+                @GoUp.started += instance.OnGoUp;
+                @GoUp.performed += instance.OnGoUp;
+                @GoUp.canceled += instance.OnGoUp;
+                @GoDown.started += instance.OnGoDown;
+                @GoDown.performed += instance.OnGoDown;
+                @GoDown.canceled += instance.OnGoDown;
             }
         }
     }
@@ -183,5 +239,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     {
         void OnHitNote(InputAction.CallbackContext context);
         void OnStartMusic(InputAction.CallbackContext context);
+        void OnGoUp(InputAction.CallbackContext context);
+        void OnGoDown(InputAction.CallbackContext context);
     }
 }

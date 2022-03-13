@@ -26,7 +26,7 @@ public class FameCurrency : MonoBehaviour
 
         text.text = "Fame: " + count;
 
-        if (count <= 0)
+       /* if (count <= 0)
         {
             SceneManager.LoadScene("You Lose");
         }
@@ -34,7 +34,7 @@ public class FameCurrency : MonoBehaviour
         if (count > 40)
         {
             SceneManager.LoadScene("You Win");
-        }
+        }*/
     }
 
     public void ChangeFame(int adjustment)
