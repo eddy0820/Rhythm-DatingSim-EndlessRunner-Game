@@ -7,10 +7,12 @@ public class NoteTrigger : MonoBehaviour
     [Range(1, 4)]
     public int lane;
     PlayerController playerController;
+    public FameCurrency FC;
 
     private void Awake()
     {
         playerController = FindObjectOfType<PlayerController>();
+        FC = FindObjectOfType<FameCurrency>();
     }
 
     private void OnTriggerStay(Collider other)
@@ -21,6 +23,7 @@ public class NoteTrigger : MonoBehaviour
             {
                 Destroy(other.gameObject);
                 Conductor.Instance.hitNote = false;
+                FC.ChangeFame(10); 
             }
         }
     }

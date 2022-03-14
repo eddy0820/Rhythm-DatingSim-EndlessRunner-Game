@@ -12,26 +12,27 @@ public class FameCurrency : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        count = 10;
+        count = 40;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            ChangeFame(10);
-            PlayerPrefs.SetInt("amount", count);
-        }
+        //if (Input.GetButtonDown("HitNote"))
+       // {
+         //   ChangeFame(10);
+       // }
+
+        PlayerPrefs.SetInt("amount", count);
 
         text.text = "Fame: " + count;
 
-       /* if (count <= 0)
+       if (count < 0)
         {
             SceneManager.LoadScene("You Lose");
         }
 
-        if (count > 40)
+        /*if (count > 40)
         {
             SceneManager.LoadScene("You Win");
         }*/
