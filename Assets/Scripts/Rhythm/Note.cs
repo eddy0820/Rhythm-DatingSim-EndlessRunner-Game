@@ -20,7 +20,7 @@ public class Note : MonoBehaviour
             {
                 float t = (Conductor.Instance.song.BeatsShownInAdvance - (beatOfThisNote - Conductor.Instance.songPositionInBeats)) / Conductor.Instance.song.BeatsShownInAdvance;
 
-                transform.position = Vector3.Lerp(spawn.position, trigger.position, t);  
+                transform.position = Vector3.Lerp(spawn.position, trigger.position, t); 
 
                 if(t >= 1f)
                 {
@@ -34,9 +34,7 @@ public class Note : MonoBehaviour
                 t += 0.001f;
             }
             
-        }
-        
-        
+        }      
     }
 
     public void InitNote(Transform spawnPos, Transform destroyPos, Transform triggerPos, float beat)
