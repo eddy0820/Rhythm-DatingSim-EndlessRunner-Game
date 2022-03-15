@@ -113,80 +113,83 @@ public class Conductor : MonoBehaviour
 
     private void Update()
     {
-        if(!musicSource.isPlaying)
+        if(!PauseMenu.gameIsPaused)
         {
-            nextIndex = 0;
-
-            if(!NPCChecked) // needs to be set to false somewhere
+            if(!musicSource.isPlaying)
             {
-                // Chooses NPC
-                int randNum = UnityEngine.Random.Range(0, NPCDatabase.GetNPC.Count);
-                currNPC = NPCDatabase.GetNPC[randNum];
+                nextIndex = 0;
 
-                if(NPCDatabase.GetNPC[randNum].currFameCost <= fameCurrency.count)
+                if(!NPCChecked) // needs to be set to false somewhere
                 {
-                    // Scales their fame cost
-                    if(NPCDatabase.GetNPC[randNum].currTimesShown > 0)
+                    // Chooses NPC
+                    int randNum = UnityEngine.Random.Range(0, NPCDatabase.GetNPC.Count);
+                    currNPC = NPCDatabase.GetNPC[randNum];
+
+                    if(NPCDatabase.GetNPC[randNum].currFameCost <= fameCurrency.count)
                     {
-                        float temp = NPCDatabase.GetNPC[randNum].currFameCost + (NPCDatabase.GetNPC[randNum].currFameCost * NPCDatabase.GetNPC[randNum].FameScaleFactor);
-                        NPCDatabase.GetNPC[randNum].currFameCost = (int) temp;
-                    }
+                        // Scales their fame cost
+                        if(NPCDatabase.GetNPC[randNum].currTimesShown > 0)
+                        {
+                            float temp = NPCDatabase.GetNPC[randNum].currFameCost + (NPCDatabase.GetNPC[randNum].currFameCost * NPCDatabase.GetNPC[randNum].FameScaleFactor);
+                            NPCDatabase.GetNPC[randNum].currFameCost = (int) temp;
+                        }
 
-                    // Sets the NPCs lane to the players
-                    switch(playerController.currentLane) 
+                        // Sets the NPCs lane to the players
+                        switch(playerController.currentLane) 
+                        {
+                            case 1:
+                                NPCGameObject.transform.position = NPCLoc1.position;
+                                playerDestLoc = playerDestLoc1;
+                                NPCDestLoc = NPCDestLoc1;
+                                break;
+                            case 2:
+                                NPCGameObject.transform.position = NPCLoc2.position;
+                                playerDestLoc = playerDestLoc2;
+                                NPCDestLoc = NPCDestLoc2;
+                                break;
+                            case 3:
+                                NPCGameObject.transform.position = NPCLoc3.position;
+                                playerDestLoc = playerDestLoc3;
+                                NPCDestLoc = NPCDestLoc3;
+                                break;
+                            case 4:
+                                NPCGameObject.transform.position = NPCLoc4.position;
+                                playerDestLoc = playerDestLoc4;
+                                NPCDestLoc = NPCDestLoc4;
+                                break;
+                        }
+
+                        // Moves the characters towards each other
+                        StartCoroutine(LerpPlayer(playerController.gameObject.transform.position, playerDestLoc.position));
+                        StartCoroutine(LerpNPC());
+
+                        NPCDatabase.GetNPC[randNum].currTimesShown++;
+                    }
+                    else
                     {
-                        case 1:
-                            NPCGameObject.transform.position = NPCLoc1.position;
-                            playerDestLoc = playerDestLoc1;
-                            NPCDestLoc = NPCDestLoc1;
-                            break;
-                        case 2:
-                            NPCGameObject.transform.position = NPCLoc2.position;
-                            playerDestLoc = playerDestLoc2;
-                            NPCDestLoc = NPCDestLoc2;
-                            break;
-                        case 3:
-                            NPCGameObject.transform.position = NPCLoc3.position;
-                            playerDestLoc = playerDestLoc3;
-                            NPCDestLoc = NPCDestLoc3;
-                            break;
-                        case 4:
-                            NPCGameObject.transform.position = NPCLoc4.position;
-                            playerDestLoc = playerDestLoc4;
-                            NPCDestLoc = NPCDestLoc4;
-                            break;
+                        song = idleSong;
+                        musicSource.clip = song.Song;
+                        StartMusic();
                     }
+                    
+                    NPCChecked = true;
+                } 
+            }
 
-                    // Moves the characters towards each other
-                    StartCoroutine(LerpPlayer(playerController.gameObject.transform.position, playerDestLoc.position));
-                    StartCoroutine(LerpNPC());
+            if(playerDone && NPCDone)
+            {
+                playerDone = false;
+                NPCDone = false;
+                GetComponent<DialogueManager>().StartDialogue(currNPC.NPCDialogue);
+            }
+            else if(playerDone)
+            {
+                playerDone = false;
+                song = currNPC.Song;
+                musicSource.clip = song.Song;
+                StartMusic();
 
-                    NPCDatabase.GetNPC[randNum].currTimesShown++;
-                }
-                else
-                {
-                    song = idleSong;
-                    musicSource.clip = song.Song;
-                    StartMusic();
-                }
-                
-                NPCChecked = true;
-            } 
-        }
-
-        if(playerDone && NPCDone)
-        {
-            playerDone = false;
-            NPCDone = false;
-            GetComponent<DialogueManager>().StartDialogue(currNPC.NPCDialogue);
-        }
-        else if(playerDone)
-        {
-            playerDone = false;
-            song = currNPC.Song;
-            musicSource.clip = song.Song;
-            StartMusic();
-
+            }
         }
     }
 
