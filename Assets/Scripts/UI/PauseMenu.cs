@@ -7,7 +7,6 @@ public class PauseMenu : MonoBehaviour
     public GameObject pauseMenuGameObject;
     public GameObject startObject;
     public GameObject spawingSpotObject;
-    //public AudioSource levelBackgroundMusic;
 
     void Start()
     {
@@ -46,7 +45,7 @@ public class PauseMenu : MonoBehaviour
         spawingSpotObject.SetActive(true);
         Time.timeScale = 1f;
         gameIsPaused = false;
-        //levelBackgroundMusic.Play();
+       //AudioListener.pause = false;
     }
 
     void Pause()
@@ -56,17 +55,32 @@ public class PauseMenu : MonoBehaviour
         spawingSpotObject.SetActive(false);
         Time.timeScale = 0f;
         gameIsPaused = true;
-        //levelBackgroundMusic.Pause();
+        //AudioListener.pause = true;
+        PauseAllSources();
     }
 
     public void ReturnToMainMenu()
     {
-        SceneManager.LoadScene("MainMenuScene");
+        SceneManager.LoadScene("Title");
     }
 
     public void Retry()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    void PauseAllSources()
+    {
+        AudioSource[] allAudioSources = FindObjectsOfType<AudioSource>();
+        foreach(AudioSource a in allAudioSources)
+        {
+            if (a.isActiveAndEnabled == true)
+            {
+                if (a.isPlaying) a.Pause();
+                else a.UnPause();
+            }
+        }
+
     }
 
 }
