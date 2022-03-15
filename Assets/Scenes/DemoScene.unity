@@ -315,6 +315,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lane: 3
   FC: {fileID: 0}
+  clip: {fileID: 8300000, guid: 79c71a64e7c0971468f3043f117703bc, type: 3}
 --- !u!54 &49114433
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -7140,6 +7141,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lane: 4
   FC: {fileID: 0}
+  clip: {fileID: 8300000, guid: 79c71a64e7c0971468f3043f117703bc, type: 3}
 --- !u!54 &1824198013
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -7983,6 +7985,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lane: 2
   FC: {fileID: 0}
+  clip: {fileID: 8300000, guid: 79c71a64e7c0971468f3043f117703bc, type: 3}
 --- !u!54 &2029891465
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -8191,6 +8194,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lane: 1
   FC: {fileID: 0}
+  clip: {fileID: 8300000, guid: 79c71a64e7c0971468f3043f117703bc, type: 3}
 --- !u!54 &2071632393
 Rigidbody:
   m_ObjectHideFlags: 0

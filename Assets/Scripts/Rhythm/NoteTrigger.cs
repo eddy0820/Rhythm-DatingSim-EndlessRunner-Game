@@ -8,6 +8,7 @@ public class NoteTrigger : MonoBehaviour
     public int lane;
     PlayerController playerController;
     public FameCurrency FC;
+    public AudioClip clip;
 
     private void Awake()
     {
@@ -22,6 +23,7 @@ public class NoteTrigger : MonoBehaviour
             if(Conductor.Instance.hitNote && playerController.currentLane == lane)
             {
                 Destroy(other.gameObject);
+                AudioSource.PlayClipAtPoint(clip, transform.position);
                 Conductor.Instance.hitNote = false;
                 FC.ChangeFame(10); 
             }
