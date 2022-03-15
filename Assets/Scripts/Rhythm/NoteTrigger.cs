@@ -25,7 +25,7 @@ public class NoteTrigger : MonoBehaviour
                 Destroy(other.gameObject);
                 AudioSource.PlayClipAtPoint(clip, transform.position);
                 Conductor.Instance.hitNote = false;
-                FC.ChangeFame(10); 
+                FC.ChangeFame(5); 
             }
         }
     }

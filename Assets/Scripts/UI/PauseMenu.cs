@@ -10,7 +10,7 @@ public class PauseMenu : MonoBehaviour
 
     void Start()
     {
-        Resume();   //This is to make sure the game doesn't load initally into a paused state.  
+       
     }
 
     void Update()
