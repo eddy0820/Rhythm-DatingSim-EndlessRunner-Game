@@ -115,7 +115,7 @@ public class Conductor : MonoBehaviour
     {
         if(!PauseMenu.gameIsPaused)
         {
-            if(!musicSource.isPlaying)
+            if(!musicSource.isPlaying && nextIndex >= song.Notes.Length)
             {
                 nextIndex = 0;
 
