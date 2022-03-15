@@ -10,6 +10,8 @@ public class DialogueManager : MonoBehaviour
     public GameObject NPCDialogue;
     public TextMeshProUGUI DialogueText1;
     public TextMeshProUGUI DialogueText2;
+    public GameObject PlayerImage;
+    public GameObject NPCImage;
     bool inDialogue;
  
 
@@ -46,11 +48,18 @@ public class DialogueManager : MonoBehaviour
         {
             NPCDialogue.SetActive(false);
             PlayerDialogue.SetActive(true);
+
+            NPCImage.SetActive(false);
+            PlayerImage.SetActive(true);
+
         }
         else
         {
             PlayerDialogue.SetActive(false);
             NPCDialogue.SetActive(true);
+
+            PlayerImage.SetActive(false);
+            NPCImage.SetActive(true);
         }
 
         DialogueText1.gameObject.SetActive(true);
@@ -68,6 +77,8 @@ public class DialogueManager : MonoBehaviour
         PlayerDialogue.SetActive(false);
         DialogueText1.gameObject.SetActive(false);
         DialogueText2.gameObject.SetActive(false);
+        PlayerImage.SetActive(false);
+        NPCImage.SetActive(false);
 
         GetComponent<Conductor>().GoToNextSong();
     }
