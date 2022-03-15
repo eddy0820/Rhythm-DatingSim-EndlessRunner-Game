@@ -12,7 +12,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8c1001654fbe374aa9abb0306fcb8dc, type: 3}
   m_Name: NPC.EDM
   m_EditorClassIdentifier: 
-  name: EDM Dude
+  name: Eddy, The Party King
   song: {fileID: 11400000, guid: 9e6a62f2675efef4e8bdb2f0fa0bdef3, type: 2}
   initialFameCost: 40
   fameScaleFactor: 1.3
+  npcDialogue:
+    sentences:
+    - speaker: Kpeakes, The Endless Runner
+      sentance: "It\u2019s Eddy, The Party King! His music was famous for being at
+        almost every party!"
+    - speaker: Eddy, The Party King
+      sentance: Hey kid! I listened to some of your music.
+    - speaker: Kpeakes, The Endless Runner
+      sentance: Really?!
+    - speaker: Eddy, The Party King
+      sentance: "Yeah! I like it a lot! It really lets me relax\u2026 especially
+        when I am not creating my own stuff."
+    - speaker: Kpeakes, The Endless Runner
+      sentance: Thanks! Your music is always filling the dance floor.
+    - speaker: Eddy, The Party King
+      sentance: "Heh\u2026 You know\u2026 l think your radio having a larger medium
+        would be interesting\u2026You getting what i'm talking about right? You interested?"
+    - speaker: Kpeakes, The Endless Runner
+      sentance: Of course I'm interested! I would love to be able to play your songs!
+    - speaker: Eddy, The Party King
+      sentance: "Good\u2026Here's my track. I'll be listening for it. And i'm sure
+        you won\u2019t disappoint."
+    - speaker: Kpeakes, The Endless Runner
+      sentance: "Nice! I got an EDM Track! Hopefully this all goes smoothly\u2026"
+  dialogueBox: {fileID: 21300000, guid: ad335ffa038295d49a88b5654f904eee, type: 3}
+  font: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
+  dialogueColor1: {r: 0, g: 0.13558388, b: 1, a: 0}
+  dialogueColor2: {r: 1, g: 0, b: 0, a: 0}

@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     public Transform playerLoc2;
     public Transform playerLoc3;
     public Transform playerLoc4;
+    [System.NonSerialized] public Vector3 playerLoc;
 
     [System.NonSerialized] public int currentLane;
     bool isDirty;
@@ -34,15 +35,19 @@ public class PlayerController : MonoBehaviour
                 switch(currentLane) 
                 {
                     case 1:
+                        playerLoc = playerLoc1.position;
                         transform.position = playerLoc1.position;
                         break;
                     case 2:
+                        playerLoc = playerLoc2.position;
                         transform.position = playerLoc2.position;
                         break;
                     case 3:
+                        playerLoc = playerLoc3.position;
                         transform.position = playerLoc3.position;
                         break;
                     case 4:
+                        playerLoc = playerLoc4.position;
                         transform.position = playerLoc4.position;
                         break;
                 }

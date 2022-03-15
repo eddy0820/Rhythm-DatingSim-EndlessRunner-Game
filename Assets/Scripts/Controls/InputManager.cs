@@ -8,6 +8,7 @@ public class InputManager : MonoBehaviour
     PlayerControls.PlayerActions playerControls;
     Conductor conductor;
     PlayerController playerController;
+    DialogueManager dialogueManager;
 
     private void Awake()
     {
@@ -16,6 +17,7 @@ public class InputManager : MonoBehaviour
 
         conductor = GetComponent<Conductor>();
         playerController = FindObjectOfType<PlayerController>();
+        dialogueManager = GetComponent<DialogueManager>();
         
         playerControls.StartMusic.performed += _ =>
             conductor.StartMusic();
@@ -28,7 +30,9 @@ public class InputManager : MonoBehaviour
 
         playerControls.GoUp.performed += _ =>
             playerController.GoUp();
-        
+
+        playerControls.NextLine.performed += _ =>
+            dialogueManager.OnNextLine();
     }
 
     private void Test(){Debug.Log("bruh");}

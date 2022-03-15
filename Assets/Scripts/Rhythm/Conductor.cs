@@ -83,6 +83,9 @@ public class Conductor : MonoBehaviour
     PlayerController playerController;
     bool playerDone;
     bool NPCDone;
+    NPCObject currNPC;
+    Vector3 NPCStartLoc;
+    SongObject idleSong;
 
     private void Awake()
     {
@@ -103,6 +106,9 @@ public class Conductor : MonoBehaviour
 
         /////////////////////////////
         NPCChecked = true;
+        NPCStartLoc = new Vector3(-6.88f, 1.6f, 3);
+
+        idleSong = song;
     }
 
     private void Update()
@@ -115,6 +121,7 @@ public class Conductor : MonoBehaviour
             {
                 // Chooses NPC
                 int randNum = UnityEngine.Random.Range(0, NPCDatabase.GetNPC.Count);
+                currNPC = NPCDatabase.GetNPC[randNum];
 
                 if(NPCDatabase.GetNPC[randNum].currFameCost <= fameCurrency.count)
                 {
@@ -151,13 +158,15 @@ public class Conductor : MonoBehaviour
                     }
 
                     // Moves the characters towards each other
-                    StartCoroutine(LerpPlayer());
+                    StartCoroutine(LerpPlayer(playerController.gameObject.transform.position, playerDestLoc.position));
                     StartCoroutine(LerpNPC());
 
                     NPCDatabase.GetNPC[randNum].currTimesShown++;
                 }
                 else
                 {
+                    song = idleSong;
+                    musicSource.clip = song.Song;
                     StartMusic();
                 }
                 
@@ -167,7 +176,17 @@ public class Conductor : MonoBehaviour
 
         if(playerDone && NPCDone)
         {
-            // Dialogue start here
+            playerDone = false;
+            NPCDone = false;
+            GetComponent<DialogueManager>().StartDialogue(currNPC.NPCDialogue);
+        }
+        else if(playerDone)
+        {
+            playerDone = false;
+            song = currNPC.Song;
+            musicSource.clip = song.Song;
+            StartMusic();
+
         }
     }
 
@@ -234,13 +253,13 @@ public class Conductor : MonoBehaviour
         yield break;
     }
 
-    IEnumerator LerpPlayer()
+    IEnumerator LerpPlayer(Vector3 _start, Vector3 _end)
     {
         float t = 0;
-        Vector3 start = playerController.gameObject.transform.position;
+        Vector3 start = _start;
         while(t < 1)
         {
-            playerController.gameObject.transform.position = Vector3.Lerp(start, playerDestLoc.position, t); 
+            playerController.gameObject.transform.position = Vector3.Lerp(start, _end, t); 
             t += 0.001f;
             yield return null;
         }
@@ -264,4 +283,11 @@ public class Conductor : MonoBehaviour
         NPCDone = true;
         yield break;
     }
+
+    public void GoToNextSong()
+    {
+        NPCGameObject.transform.position = NPCStartLoc;
+        StartCoroutine(LerpPlayer(playerController.gameObject.transform.position, playerController.playerLoc));
+    }
+
 }

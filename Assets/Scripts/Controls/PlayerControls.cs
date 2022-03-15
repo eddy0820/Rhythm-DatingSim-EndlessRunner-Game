@@ -49,6 +49,14 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""NextLine"",
+                    ""type"": ""Button"",
+                    ""id"": ""470f28de-1085-4d72-9f7c-621636e6c550"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -95,6 +103,17 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""action"": ""GoDown"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2502dae2-8b6a-4c79-a10c-6c109c56e3b1"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""NextLine"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -124,6 +143,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_Player_StartMusic = m_Player.FindAction("Start Music", throwIfNotFound: true);
         m_Player_GoUp = m_Player.FindAction("GoUp", throwIfNotFound: true);
         m_Player_GoDown = m_Player.FindAction("GoDown", throwIfNotFound: true);
+        m_Player_NextLine = m_Player.FindAction("NextLine", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -177,6 +197,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_StartMusic;
     private readonly InputAction m_Player_GoUp;
     private readonly InputAction m_Player_GoDown;
+    private readonly InputAction m_Player_NextLine;
     public struct PlayerActions
     {
         private @PlayerControls m_Wrapper;
@@ -185,6 +206,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         public InputAction @StartMusic => m_Wrapper.m_Player_StartMusic;
         public InputAction @GoUp => m_Wrapper.m_Player_GoUp;
         public InputAction @GoDown => m_Wrapper.m_Player_GoDown;
+        public InputAction @NextLine => m_Wrapper.m_Player_NextLine;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -206,6 +228,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @GoDown.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGoDown;
                 @GoDown.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGoDown;
                 @GoDown.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGoDown;
+                @NextLine.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNextLine;
+                @NextLine.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNextLine;
+                @NextLine.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNextLine;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -222,6 +247,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @GoDown.started += instance.OnGoDown;
                 @GoDown.performed += instance.OnGoDown;
                 @GoDown.canceled += instance.OnGoDown;
+                @NextLine.started += instance.OnNextLine;
+                @NextLine.performed += instance.OnNextLine;
+                @NextLine.canceled += instance.OnNextLine;
             }
         }
     }
@@ -241,5 +269,6 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         void OnStartMusic(InputAction.CallbackContext context);
         void OnGoUp(InputAction.CallbackContext context);
         void OnGoDown(InputAction.CallbackContext context);
+        void OnNextLine(InputAction.CallbackContext context);
     }
 }

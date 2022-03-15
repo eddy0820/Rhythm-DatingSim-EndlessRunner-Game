@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1371364888610939004}
   - component: {fileID: 1371364888610939005}
   - component: {fileID: 1371364888610939002}
+  - component: {fileID: 5198746473664042769}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -57,7 +58,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc2b65cb633d798459d46cc79df2bb5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  song: {fileID: 11400000, guid: fbe8a67e131116f4480bb918d8f45d5c, type: 2}
+  song: {fileID: 11400000, guid: 696f61dd2ad78124084045495e912a54, type: 2}
   spawn1: {fileID: 0}
   destroy1: {fileID: 0}
   trigger1: {fileID: 0}
@@ -70,7 +71,21 @@ MonoBehaviour:
   spawn4: {fileID: 0}
   destroy4: {fileID: 0}
   trigger4: {fileID: 0}
+  NPCLoc1: {fileID: 0}
+  NPCLoc2: {fileID: 0}
+  NPCLoc3: {fileID: 0}
+  NPCLoc4: {fileID: 0}
+  playerDestLoc1: {fileID: 0}
+  playerDestLoc2: {fileID: 0}
+  playerDestLoc3: {fileID: 0}
+  playerDestLoc4: {fileID: 0}
+  NPCDestLoc1: {fileID: 0}
+  NPCDestLoc2: {fileID: 0}
+  NPCDestLoc3: {fileID: 0}
+  NPCDestLoc4: {fileID: 0}
   notePrefab: {fileID: 6824834899690173168, guid: e1ec3f49a07cfbc4facb78016eee42dc, type: 3}
+  NPCGameObject: {fileID: 0}
+  NPCDatabase: {fileID: 11400000, guid: a8fdb6c6a8cd68e469ef3d31b03bf8ab, type: 2}
   songBpm: 120
   secPerBeat: 0
   songPosition: 0
@@ -171,3 +186,15 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &5198746473664042769
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1371364888610939000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d38864669e8525c4badfe20469085815, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
